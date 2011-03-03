@@ -31,7 +31,7 @@ describe UsersController do
   
   it "should have the right title" do
       get :new
-      response.should have_selector("title", :content => "Ruby on Rails Tutorial Sample App | Sign up")
+      response.should have_selector("title", :content => "Sign up")
   end
   
   
@@ -69,7 +69,7 @@ describe UsersController do
 
       it "should have the right title" do
         post :create, :user => @attr
-        response.should have_selector("title", :content => "Ruby on Rails Tutorial Sample App | Sign up")
+        response.should have_selector("title", :content => "Sign up")
       end
 
       it "should render the 'new' page" do
@@ -89,6 +89,11 @@ describe UsersController do
         lambda do
           post :create, :user => @attr
         end.should change(User, :count).by(1)
+      end
+      
+      it "should sign the user in" do
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
 
       it "should redirect to the user show page" do
